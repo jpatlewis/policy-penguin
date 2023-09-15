@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, jsonify
 from database.db_conn import create_session  # Import the create_session function
 from database.db_models import User  # Import your SQLAlchemy model(s)
 import random
@@ -9,9 +9,11 @@ app = Flask(__name__)
 # Create the SQLAlchemy engine and session factory
 engine, Session = create_session()
 
+
 @app.route('/')
 def index():
     return "Hey!"
+
 
 @app.route('/users')
 def list_users():
@@ -39,6 +41,7 @@ def list_users():
     finally:
         # Close the session
         session.close()
+
 
 @app.route('/create_test_user', methods=['GET'])
 def create_test_user():
@@ -71,6 +74,7 @@ def create_test_user():
 
     finally:
         session.close()
+
 
 def generate_unique_username(length=8):
     username = ''.join(random.choices(string.ascii_letters + string.digits, k=length))

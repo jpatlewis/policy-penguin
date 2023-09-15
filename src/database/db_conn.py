@@ -1,6 +1,6 @@
-import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 
 def create_session():
     DATABASE_URL = "postgresql://myuser:mypassword@db:5432/mydatabase"

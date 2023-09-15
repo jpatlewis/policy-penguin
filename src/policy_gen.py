@@ -33,5 +33,3 @@ print(policy.statements)
 
 # Close the session
 session.close()
-
-
