@@ -6,11 +6,11 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Create and set the working directory
-RUN mkdir /app
-WORKDIR /app
+RUN mkdir /pp
+WORKDIR /pp
 
-# Copy the current directory contents into the container at /app
-COPY . /app/
+# Copy the current directory contents into the container at /src
+COPY src/ .
 
 # Install any needed packages specified in requirements.txt
 RUN apt-get update -y
@@ -21,6 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 5000 for Flask
 EXPOSE 5000
+RUN pwd
 
 # Define the command to start the Flask API using main.py
-CMD ["python", "app/app.py"]
+CMD ["python", "/pp/main.py"]

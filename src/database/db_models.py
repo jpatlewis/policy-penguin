@@ -1,7 +1,8 @@
-import db_conn as db_conn
+from database.db_conn import create_session
 from sqlalchemy import Column, Integer, String, ARRAY, JSON
 from sqlalchemy.ext.declarative import declarative_base
 
+engine, Session = create_session()
 Base = declarative_base()
 
 class User(Base):
@@ -20,4 +21,4 @@ class Policy(Base):
     description = Column(String)
     statements = Column(ARRAY(JSON))
 
-Base.metadata.create_all(db_conn.engine)
+Base.metadata.create_all(engine)
