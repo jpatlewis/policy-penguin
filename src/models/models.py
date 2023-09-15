@@ -1,15 +1,17 @@
 import json
 
 class User:
-    def __init__(self, name, description=None, email=None):
-        #self.id = 123413424 gotta figure this out
-        self.name = name
+    def __init__(self, username, description=None, email=None):
+        
+        __tablename__ = "users"
+        self.name = username
         self.description = description
         self.email = email
 
 class IamPolicy:
     def __init__(self, name, description=None):
-        #self.id = 123413424 gotta figure this out
+
+        __tablename__ = 'policies'
         self.name = name
         self.description = description
         self.statements = []

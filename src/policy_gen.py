@@ -1,8 +1,12 @@
 import json
-from models.models import IamPolicy
+import database.db_conn as db_conn
+from models.models import IamPolicy as Policy
+from database.db_models import Policy as Db_Policy
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
 # Create an IAM policy instance
-my_policy = IamPolicy("MyPolicy", "Description of My IAM Policy")
+my_policy = Policy("MyPolicy", "Description of My IAM Policy")
 
 # Add statements to the policy
 my_policy.add_statement("Allow", "s3:ListBucket", "arn:aws:s3:::example-bucket")
@@ -12,6 +16,21 @@ my_policy.add_statement("Allow", ["s3:GetObject", "s3:PutObject"], "arn:aws:s3::
 policy_json = my_policy.to_json()
 
 # Print the JSON representation of the policy
-print(policy_json)
+print(my_policy)
+
+#map model to db model
+my_policy_db = Db_Policy(name=my_policy.name, description=my_policy.description, statements=my_policy.statements)
+
+# Create a new policy
+session = db_conn.Session()
+session.add(my_policy_db)
+session.commit()
+
+# Query the database
+policy = session.query(Db_Policy).filter_by(name=my_policy.name).first()
+print(policy.statements)
+
+# Close the session
+session.close()
 
 
