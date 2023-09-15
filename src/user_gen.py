@@ -1,6 +1,6 @@
+import database.db_conn as db_conn
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-import database.db_conn as db_conn
 from database.db_models import User, Policy
 
 # Create a new user
