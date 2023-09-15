@@ -19,6 +19,7 @@ policy_json = my_policy.to_json()
 print(my_policy)
 
 #map model to db model
+#this is a shitty experience and could be improved
 my_policy_db = Db_Policy(name=my_policy.name, description=my_policy.description, statements=my_policy.statements)
 
 # Create a new policy
