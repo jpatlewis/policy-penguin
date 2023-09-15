@@ -21,6 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 5000 for Flask
 EXPOSE 5000
+EXPOSE 5432
 RUN pwd
 
 # Define the command to start the Flask API using main.py

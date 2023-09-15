@@ -15,7 +15,6 @@ class User(Base):
 class Policy(Base):
     __tablename__ = 'policies'
 
-    #id = Column(Integer, primary_key=True) need to figure this out
     id = Column(Integer, primary_key=True)
     name = Column(String)
     description = Column(String)
