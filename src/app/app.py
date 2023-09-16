@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
-from database.db_conn import create_session  # Import the create_session function
-from database.db_models import User  # Import your SQLAlchemy model(s)
-from request_factory.request_factory import ApiRequestFactory
+from database.db_conn import create_session
+from database.db_models import User
+# from request_factory.request_factory import ApiRequestFactory
 from config.config import GPT_API_KEY
 import random
 import string
@@ -11,9 +11,9 @@ app = Flask(__name__)
 # This key isn't valid because you didn't pay for a key
 openai.api_key = GPT_API_KEY
 
-
 # Create the SQLAlchemy engine and session factory
 engine, Session = create_session()
+
 
 @app.route('/')
 def index():
@@ -22,7 +22,6 @@ def index():
 
 @app.route('/req')
 def req():
-
     status_message = "things are weird"
 
     try:
@@ -35,24 +34,24 @@ def req():
         )
 
         if response.status_code == 200:
-            # Process the successful response here
+            # Things are good
             print(response.choices[0].text)
             status_message = "things are good"
         else:
-            # things are bad
-            print(f"failed with status code: {response.status_code}")
+            # Things are bad
+            print(f"Failed with status code: {response.status_code}")
+            status_message = f"Failed with status code: {response.status_code}"
 
     except openai.OpenAIError as e:
         # Handle OpenAI-specific errors
         print(f"OpenAI API error: {str(e)}")
         status_message = str(e)
     except Exception as e:
-        # other errors
-        print(f"An unexpected error occurred: {str(e)}")
+        # Other unexpected errors
+        print(f"An unexpected error occurred with OpenAI request: {str(e)}")
         status_message = str(e)
 
-    finally:
-        return status_message
+    return status_message
 
 
 @app.route('/users')
@@ -71,7 +70,7 @@ def list_users():
         for user in users:
             print(user.email)
 
-        return "look at logs dingus"
+        return "Look at logs dingus"
 
     except Exception as e:
         # Handle exceptions or roll back changes if an error occurs
@@ -85,7 +84,7 @@ def list_users():
 
 @app.route('/create_test_user', methods=['GET'])
 def create_test_user():
-    # Generate a unique usernam
+    # Generate a unique username
     username = generate_unique_username()
 
     session = Session()
