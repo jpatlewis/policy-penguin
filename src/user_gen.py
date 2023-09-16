@@ -1,7 +1,7 @@
 import database.db_conn as db_conn
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from database.db_models import User, Policy
+from models.db_models import User, Policy
 
 # Create a new user
 new_user = User(username='joe_schmoe', email='joe@example.com')

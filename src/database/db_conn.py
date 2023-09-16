@@ -12,4 +12,4 @@ def create_session():
     engine = create_engine(DATABASE_URL)
     Session = sessionmaker(bind=engine)
 
-    return engine, Session
+    return Session, engine

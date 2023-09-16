@@ -1,7 +1,7 @@
 import json
 import database.db_conn as db_conn
-from models.models import IamPolicy as Policy
-from database.db_models import Policy as Db_Policy
+from models.definitions.user import IamPolicy as Policy
+from models.db_models import Policy as Db_Policy
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -13,7 +13,6 @@ my_policy.add_statement("Allow", "s3:ListBucket", "arn:aws:s3:::example-bucket")
 my_policy.add_statement("Allow", ["s3:GetObject", "s3:PutObject"], "arn:aws:s3:::example-bucket/*")
 
 # Convert the policy to JSON format
-policy_json = my_policy.to_json()
 
 # Print the JSON representation of the policy
 print(my_policy)
