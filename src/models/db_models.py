@@ -16,6 +16,7 @@ class Policy(Base):
     __tablename__ = 'policies'
 
     id = Column(Integer, primary_key=True)
+    sid = Column(String)
     effect = Column(String)
     statements = Column(ARRAY(JSON))
     owner = Column(String)

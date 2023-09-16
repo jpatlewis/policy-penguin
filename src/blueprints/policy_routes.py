@@ -16,7 +16,7 @@ def create_policy():
 
         # Create a new session for this operation
         with Session() as session:
-            policy = Policy(sid=json_payload["sid"], effect=json_payload["effect"], statements=json_payload["statements"], owner=json_payload["statements"],)
+            policy = Policy(sid=json_payload["sid"], effect=json_payload["effect"], statements=json_payload["statements"], owner=json_payload["owner"],)
             session.add(policy)
             session.commit()
 
@@ -32,11 +32,12 @@ def list_policies():
 
         # Create a new session for this operation
         with Session() as session:
-            users = session.query(Policy).all()
+            policies = session.query(Policy).all()
+            policy_list = [{"owner": policy.owner, "statements": policy.statements} for policy in policies]
 
-        return jsonify(users)
+        return jsonify(policy_list)
     except Exception as e:
-        return jsonify({"error": f"Failed to fetch user list: {str(e)}"}), 500
+        return jsonify({"error": f"Failed to fetch policy list: {str(e)}"}), 500
     
 
 @policy_routes.route("/drop_policies_table", methods=["get"])
