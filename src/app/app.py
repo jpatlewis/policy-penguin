@@ -1,18 +1,58 @@
 from flask import Flask, jsonify
 from database.db_conn import create_session  # Import the create_session function
 from database.db_models import User  # Import your SQLAlchemy model(s)
+from request_factory.request_factory import ApiRequestFactory
+from config.config import GPT_API_KEY
 import random
 import string
+import openai
 
 app = Flask(__name__)
+# This key isn't valid because you didn't pay for a key
+openai.api_key = GPT_API_KEY
+
 
 # Create the SQLAlchemy engine and session factory
 engine, Session = create_session()
 
-
 @app.route('/')
 def index():
-    return "Hey!"
+    return "Hey!!!!"
+
+
+@app.route('/req')
+def req():
+
+    status_message = "things are weird"
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{
+                "role": "system",
+                "content": "is my key valid?"
+            }]
+        )
+
+        if response.status_code == 200:
+            # Process the successful response here
+            print(response.choices[0].text)
+            status_message = "things are good"
+        else:
+            # things are bad
+            print(f"failed with status code: {response.status_code}")
+
+    except openai.OpenAIError as e:
+        # Handle OpenAI-specific errors
+        print(f"OpenAI API error: {str(e)}")
+        status_message = str(e)
+    except Exception as e:
+        # other errors
+        print(f"An unexpected error occurred: {str(e)}")
+        status_message = str(e)
+
+    finally:
+        return status_message
 
 
 @app.route('/users')
