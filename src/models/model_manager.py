@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 
+
 class ModelManager:
     def __init__(self, session, model):
         self.session = session

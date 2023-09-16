@@ -11,7 +11,10 @@ def create_app():
 
     # Register the user_routes Blueprint
     from blueprints.user_routes import user_routes
+    from blueprints.policy_routes import policy_routes
+    
     app.register_blueprint(user_routes)
+    app.register_blueprint(policy_routes)
 
     @app.route('/')
     def index():
