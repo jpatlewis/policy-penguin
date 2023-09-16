@@ -4,6 +4,6 @@ from models.db_models import Policy, Base
 Session, engine = create_session()
 
 
-def init_db(model):
+def create_table(model):
 
     model.__table__.create(engine)
